@@ -25,7 +25,7 @@ setup(
     author_email="testopia13@gmail.com",
     license="Apache-2.0",
     packages=find_packages(exclude=("tests",)),
-    package_data={"flake8_vedro": ["py.typed"]},
+    package_data={"flake8_vedro_allure": ["py.typed"]},
     install_requires=find_required(),
     tests_require=find_dev_required(),
     classifiers=[

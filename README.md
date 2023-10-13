@@ -8,18 +8,6 @@ pip inslall flake8-vedro-allure
 ```
 
 
-## Configuration
-Flake8-vedro-allure is flake8 plugin, so the configuration is the same as [flake8 configuration](https://flake8.pycqa.org/en/latest/user/configuration.html).
-
-You can ignore rules via
-- file `setup.cfg`: parameter `ignore`
-```editorconfig
-[flake8]
-ignore = ALR001
-```
-- comment in code `#noqa: ALR001`
-
-
 ## Rules
 
 1. **ALR001**: missing @allure_labels for scenario
@@ -33,3 +21,14 @@ is_allure_labels_optional = false                 ;ALR001
 required_allure_labels = Feature,Story,Priority   ;ALR002
 unique_allure_labels = Priority                   ;ALR003
 ```
+
+## Configuration
+Flake8-vedro-allure is flake8 plugin, so the configuration is the same as [flake8 configuration](https://flake8.pycqa.org/en/latest/user/configuration.html).
+
+You can ignore rules via
+- file `setup.cfg`: parameter `ignore`
+```editorconfig
+[flake8]
+ignore = ALR001
+```
+- comment in code `#noqa: ALR001`

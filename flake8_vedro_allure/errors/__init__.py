@@ -1,5 +1,6 @@
 from .errors import (
     AllureTagIsNotUnique,
     NoAllureLabelsDecorator,
-    NoRequiredAllureTag
+    NoRequiredAllureTag,
+    NoAllureIdError
 )

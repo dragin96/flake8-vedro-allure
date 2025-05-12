@@ -64,6 +64,13 @@ class VedroAllurePlugin(PluginWithFilename):
             parse_from_config=True,
             help='List of allure labels that should not be used twice per one test',
         )
+        option_manager.add_option(
+            '--is-allure-id-required',
+            type=str,
+            default='false',
+            parse_from_config=True,
+            help='If allure.id() decorator is required for every test',
+        )
 
 
     @classmethod
@@ -73,5 +80,6 @@ class VedroAllurePlugin(PluginWithFilename):
         return Config(
             is_allure_labels_optional=str_to_bool(options.is_allure_labels_optional),
             required_allure_labels=options.required_allure_labels,
-            unique_allure_labels=options.unique_allure_labels
+            unique_allure_labels=options.unique_allure_labels,
+            is_allure_id_required=str_to_bool(options.is_allure_id_required)
         )

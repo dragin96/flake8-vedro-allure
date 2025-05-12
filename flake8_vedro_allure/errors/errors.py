@@ -14,3 +14,8 @@ class NoRequiredAllureTag(Error):
 class AllureTagIsNotUnique(Error):
     code = 'ALR003'
     message = 'scenario should has only one allure tag {allure_tag}'
+
+
+class NoAllureIdError(Error):
+    code = 'ALR004'
+    message = 'scenario should have @allure.id() decorator'

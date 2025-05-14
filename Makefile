@@ -6,3 +6,7 @@ lint:
 .PHONY: fix-imports
 fix-imports:
 	python3 -m isort -m VERTICAL_HANGING_INDENT .
+
+.PHONY: test
+test:
+	python3 -m pytest tests/

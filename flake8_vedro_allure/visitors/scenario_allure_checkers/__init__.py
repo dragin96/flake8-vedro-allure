@@ -1,3 +1,4 @@
 from .allure_labels_checker import AllureLabelsChecker
 from .required_tags_checker import AllureRequiredTagsChecker
 from .unique_tags_checker import AllureUniqueTagsChecker
+from .allure_id_checker import AllureIdRequiredChecker

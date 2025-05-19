@@ -18,4 +18,4 @@ class AllureTagIsNotUnique(Error):
 
 class NoAllureIdError(Error):
     code = 'ALR004'
-    message = 'scenario should have @allure.id() decorator'
+    message = 'scenario should have @allure.id() or @id() decorator'

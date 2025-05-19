@@ -15,13 +15,6 @@ from flake8_vedro_allure.visitors.scenario_visitor import (
 @ScenarioVisitor.register_scenario_checker
 class AllureIdRequiredChecker(ScenarioChecker):
 
-    def get_allure_id_decorator(self, scenario_node: ast.ClassDef) -> Union[ast.Call, None]:
-        for decorator in scenario_node.decorator_list:
-            if isinstance(decorator, ast.Call) and isinstance(decorator.func, ast.Attribute):
-                if decorator.func.attr == 'id' and isinstance(decorator.func.value, ast.Name) and decorator.func.value.id == 'allure':
-                    return decorator
-        return None
-
     def has_allure_id_method(self, scenario_node: ast.ClassDef) -> bool:
         for node in scenario_node.body:
             if isinstance(node, ast.FunctionDef):

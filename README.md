@@ -14,6 +14,7 @@ pip install flake8-vedro-allure
 2. **ALR002**: missing required allure tag
 3. **ALR003**: duplication of unique allure tag
 4. **ALR004**: missing allure.id() for scenario
+5. **ALR005**: duplicate allure id detected in another scenario
 
 **Rules configuration**
 ```editorconfig
@@ -21,7 +22,7 @@ pip install flake8-vedro-allure
 is_allure_labels_optional = false                 ;ALR001
 required_allure_labels = Feature,Story,Priority   ;ALR002
 unique_allure_labels = Priority                   ;ALR003
-is_allure_id_required = false                     ;ALR004
+is_allure_id_required = false                     ;ALR004, ALR005
 ```
 
 ### About ALR004 (allure.id)
@@ -41,6 +42,49 @@ class MyScenario(Scenario):
         allure.id(12345)  # or allure.dynamic.id(12345)
         # ...
 ```
+
+### About ALR005 (duplicate allure id)
+The ALR005 rule checks that each scenario has a unique Allure ID. The rule will report an error if the same ID is used in multiple scenarios. The duplicate detection works across different files and can identify duplicates between different classes within the same file.
+
+This rule uses the same configuration parameter as ALR004 (`is_allure_id_required = true`). When enabled, it will:
+
+1. Detect duplicates in class decorators:
+```python
+@allure.id(12345)  # First usage is OK
+class FirstScenario(Scenario):
+    # ...
+
+@allure.id(12345)  # Error: duplicate allure id 12345 was found in file1.py::FirstScenario
+class SecondScenario(Scenario):
+    # ...
+```
+
+2. Detect duplicates in method calls:
+```python
+class FirstScenario(Scenario):
+    def __init__(self):
+        allure.id(12345)  # First usage is OK
+        # ...
+
+class SecondScenario(Scenario):
+    def __init__(self):
+        allure.id(12345)  # Error: duplicate allure id 12345 was found in file1.py::FirstScenario
+        # ...
+```
+
+3. Detect duplicates between decorator and method calls:
+```python
+@allure.id(12345)  # First usage is OK
+class FirstScenario(Scenario):
+    # ...
+
+class SecondScenario(Scenario):
+    def __init__(self):
+        allure.id(12345)  # Error: duplicate allure id 12345 was found in file1.py::FirstScenario
+        # ...
+```
+
+The rule helps ensure that each scenario has a unique identifier in Allure reports, which is important for tracking test cases and their results.
 
 ## Configuration
 Flake8-vedro-allure is flake8 plugin, so the configuration is the same as [flake8 configuration](https://flake8.pycqa.org/en/latest/user/configuration.html).

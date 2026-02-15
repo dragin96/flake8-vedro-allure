@@ -10,8 +10,10 @@ from flake8_vedro_allure.visitors._visitor_with_filename import (
 
 class Context:
     def __init__(self, scenario_node: ast.ClassDef,
+                 import_from_nodes: List[ast.ImportFrom],
                  filename: str):
         self.scenario_node = scenario_node
+        self.import_from_nodes = import_from_nodes
         self.filename = filename
 
 
@@ -36,9 +38,13 @@ class ScenarioVisitor(VisitorWithFilename):
     def deregister_all(cls):
         cls.scenarios_checkers = []
 
+    def visit_ImportFrom(self, node: ast.ImportFrom):
+        self.import_from_nodes.append(node)
+
     def visit_ClassDef(self, node: ast.ClassDef):
         if node.name == 'Scenario':
             context = Context(scenario_node=node,
+                              import_from_nodes=self.import_from_nodes,
                               filename=self.filename)
             try:
                 for checker in self.scenarios_checkers:

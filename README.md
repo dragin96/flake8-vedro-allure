@@ -25,8 +25,9 @@ is_allure_id_required = false                     ;ALR004
 ```
 
 ### About ALR004 (allure.id)
-The ALR004 rule checks that all scenarios have an Allure ID decorator:
+The ALR004 rule checks that all scenarios have an Allure ID. This can be defined in several ways:
 
+1. Using the `@allure.id()` decorator on the scenario class:
 ```python
 import allure
 
@@ -35,14 +36,20 @@ class MyScenario(Scenario):
     # ...
 ```
 
-or using a direct import:
-
+2. Using a direct import:
 ```python
 from allure import id
 
 @id(12345)
 class MyScenario(Scenario):
     # ...
+```
+
+3. Within `__init__` for parameterized scenarios:
+```python
+class MyScenario(Scenario):
+    def __init__(self, param, allure_id):
+        allure.id(allure_id)  # or allure.dynamic.id(allure_id)
 ```
 
 ## Configuration

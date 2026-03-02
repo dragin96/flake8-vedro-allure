@@ -18,16 +18,9 @@ class AllureTagIsNotUnique(Error):
 
 class NoAllureIdError(Error):
     code = 'ALR004'
-    message = 'scenario should have @allure.id() or @id() decorator'
+    message = 'scenario should have @allure.id() decorator or allure.id() call'
 
 
 class DuplicateAllureIdError(Error):
     code = 'ALR005'
     message = 'duplicate allure id {allure_id} was found in {scenario_path}'
-    
-    def __init__(self, lineno: int, col_offset: int, **kwargs):
-        super().__init__(lineno, col_offset, **kwargs)
-        
-    @classmethod
-    def formatted_message(cls, **kwargs) -> str:
-        return cls.message.format(**kwargs)

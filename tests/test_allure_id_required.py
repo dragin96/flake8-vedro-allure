@@ -67,7 +67,7 @@ def test_with_allure_id_method():
     ScenarioVisitor.register_scenario_checker(AllureIdRequiredChecker)
     code = """
     class Scenario:
-        def setup(self):
+        def __init__(self):
             allure.id(12345)
     """
     assert_not_error(ScenarioVisitor, code,
@@ -79,8 +79,20 @@ def test_with_allure_dynamic_id_method():
     ScenarioVisitor.register_scenario_checker(AllureIdRequiredChecker)
     code = """
     class Scenario:
-        def setup(self):
+        def __init__(self):
             allure.dynamic.id(12345)
+    """
+    assert_not_error(ScenarioVisitor, code,
+                     config=DefaultConfig(is_allure_id_required=True))
+
+
+def test_with_allure_id_in_async_method():
+    ScenarioVisitor.deregister_all()
+    ScenarioVisitor.register_scenario_checker(AllureIdRequiredChecker)
+    code = """
+    class Scenario:
+        async def setup(self):
+            allure.id(12345)
     """
     assert_not_error(ScenarioVisitor, code,
                      config=DefaultConfig(is_allure_id_required=True))
@@ -91,16 +103,9 @@ def test_with_allure_id_in_parameterized_scenario():
     ScenarioVisitor.register_scenario_checker(AllureIdRequiredChecker)
     code = """
     class Scenario:
-        @classmethod
-        def __init_subclass__(cls, **kwargs):
-            super().__init_subclass__(**kwargs)
-            
-        def given_parameter(self, param):
+        def __init__(self, param):
             self.param = param
             allure.id(f"12345-{param}")
-            
-        def when_action(self):
-            pass
     """
     assert_not_error(ScenarioVisitor, code,
-                     config=DefaultConfig(is_allure_id_required=True)) 
+                     config=DefaultConfig(is_allure_id_required=True))
